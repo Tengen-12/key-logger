@@ -9,7 +9,7 @@ This project simulates a **cross-platform keylogger** built for **educational pu
 ## 📂 Project Structure
 
 ```plaintext
-keylogger-simulator/    
+key-logger/    
 │    
 ├── key-logger.py               # Keylogger script that logs keystrokes to keylog.txt    
 ├── app.py                      # Flask app to serve the dashboard and display logs    

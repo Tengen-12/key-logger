@@ -19,7 +19,7 @@ keylogger-simulator/
 │   └── disclaimer.html         # GDPR and ethical use disclaimer    
 │    
 └── static/                     # Static assets like CSS, JS, images    
-    └── style.css           # Custom styles for the dashboard    
+    └── style.css               # Custom styles for the dashboard    
 
 ---
 

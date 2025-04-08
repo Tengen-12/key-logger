@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethical Use Disclaimer & GDPR Compliance</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .navbar-brand {
+            font-weight: bold;
+        }
+        .container {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #343a40;
+            margin-bottom: 20px;
+        }
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Keylogger Simulator</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
+                <a class="nav-item nav-link" href="{{ url_for('disclaimer') }}">Disclaimer & GDPR</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-4">
+        <h2>Ethical Use Disclaimer & GDPR Compliance</h2>
+        <div class="alert alert-warning" role="alert">
+            <strong>Warning:</strong> This keylogger simulator is provided <em>for educational purposes only</em>. Unauthorized use of keylogging software is illegal and unethical.
+        </div>
+        <h4>Ethical Use</h4>
+        <p>This tool is intended solely for learning and research in cybersecurity. It should only be used in controlled environments, such as isolated virtual machines or labs, where all parties have provided explicit consent.</p>
+        <h4>GDPR Compliance</h4>
+        <p>If you plan to use this tool in any environment that involves personal data, you must comply with the General Data Protection Regulation (GDPR) and any other applicable data protection laws. This simulator logs data locally only. No data is transmitted over networks. Ensure that you do not capture or store personal data without explicit, informed consent.</p>
+        <p>Failure to use this tool ethically and legally may result in severe legal consequences.</p>
+    </div>
+    <footer>
+        &copy; 2023 Keylogger Simulator. All rights reserved.
+    </footer>
+</body>
+</html>

@@ -134,13 +134,13 @@ HKCU\Software\Microsoft\Windows\CurrentVersion\Run
 ---
 
 ## 🚧 Work In Progress
-This keylogger simulator is still a work in progress. While it performs core functions like keylogging and log visualization, enhancements and bug fixes are ongoing.
+This keylogger simulator is still a **work in progress**. While it performs core functions like keylogging and log visualization, enhancements and bug fixes are ongoing.
 
 If you encounter any issues, have suggestions, or would like to contribute to improvements:
 
 *📧 Contact Me:*
 
-barokar.aditya1807@gmail.com
+barokar.aditya1807@gmail.com    
 https://github.com/Tengen-12
 
 ---

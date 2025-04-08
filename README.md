@@ -116,11 +116,9 @@ HKCU\Software\Microsoft\Windows\CurrentVersion\Run
 
 ## 📷 Screenshots
 
-![Dashboard UI](![dashboard](https://github.com/user-attachments/assets/f0a3cda7-7b57-4590-9494-7c40602f5e9b.png)
-)
-)
-![Keylog.txt](![keylog](https://github.com/user-attachments/assets/93fcc03c-9be4-4d3a-9629-84db1c6e1e96.png)
-)
+![dashboard](https://github.com/user-attachments/assets/311079bb-fc54-439c-b3c4-3881760c3560)
+![keylog](https://github.com/user-attachments/assets/3e810ecf-735d-463b-9f47-fc735aea3abd)
+
 > Example of live keystroke monitoring via Flask web dashboard.
 
 ---

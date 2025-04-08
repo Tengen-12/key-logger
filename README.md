@@ -41,8 +41,8 @@ keylogger-simulator/
 ### 1. Clone or Download the Project
 
 ```bash
-git clone https://github.com/yourusername/keylogger-simulator.git
-cd keylogger-simulator
+git clone https://github.com/yourusername/key-logger.git
+cd key-logger
 ```
 
 ### 2. Install Requirements
@@ -84,7 +84,7 @@ Run the following batch file to:
 - Set it to run at every user login via registry
 
 ```bash
-setup_keylogger.bat
+setup-keylogger.bat
 ```
 
 It creates a registry entry under:
@@ -130,6 +130,18 @@ HKCU\Software\Microsoft\Windows\CurrentVersion\Run
 - Flask routes and frontend-backend integration
 - Ethical coding practices (GDPR, disclaimers)
 - Registry autostart setup and EXE bundling
+
+---
+
+## 🚧 Work In Progress
+This keylogger simulator is still a work in progress. While it performs core functions like keylogging and log visualization, enhancements and bug fixes are ongoing.
+
+If you encounter any issues, have suggestions, or would like to contribute to improvements:
+
+*📧 Contact Me:*
+
+barokar.aditya1807@gmail.com
+https://github.com/Tengen-12
 
 ---
 

@@ -8,18 +8,18 @@ This project simulates a **cross-platform keylogger** built for **educational pu
 
 ## 📂 Project Structure
 
-keylogger-simulator/
-│
-├── key-logger.py               # Keylogger script that logs keystrokes to keylog.txt
-├── app.py                      # Flask app to serve the dashboard and display logs
-├── setup_keylogger.bat         # Optional: Windows setup script for auto-start
-│
-├── templates/                  # HTML templates for Flask
-│   ├── dashboard.html          # Dashboard UI showing keylog content
-│   └── disclaimer.html         # GDPR and ethical use disclaimer
-│
-└── static/                     # Static assets like CSS, JS, images
-    └── style.css           # Custom styles for the dashboard
+keylogger-simulator/    
+│    
+├── key-logger.py               # Keylogger script that logs keystrokes to keylog.txt    
+├── app.py                      # Flask app to serve the dashboard and display logs    
+├── setup_keylogger.bat         # Optional: Windows setup script for auto-start    
+│    
+├── templates/                  # HTML templates for Flask    
+│   ├── dashboard.html          # Dashboard UI showing keylog content    
+│   └── disclaimer.html         # GDPR and ethical use disclaimer    
+│    
+└── static/                     # Static assets like CSS, JS, images    
+    └── style.css           # Custom styles for the dashboard    
 
 ---
 

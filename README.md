@@ -8,6 +8,7 @@ This project simulates a **cross-platform keylogger** built for **educational pu
 
 ## 📂 Project Structure
 
+```plaintext
 keylogger-simulator/    
 │    
 ├── key-logger.py               # Keylogger script that logs keystrokes to keylog.txt    
@@ -20,6 +21,7 @@ keylogger-simulator/
 │    
 └── static/                     # Static assets like CSS, JS, images    
     └── style.css               # Custom styles for the dashboard    
+```
 
 ---
 

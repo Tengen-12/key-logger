@@ -41,7 +41,7 @@ keylogger-simulator/
 ### 1. Clone or Download the Project
 
 ```bash
-git clone https://github.com/yourusername/key-logger.git
+git clone https://github.com/Tengen-12/key-logger.git
 cd key-logger
 ```
 

@@ -116,8 +116,9 @@ HKCU\Software\Microsoft\Windows\CurrentVersion\Run
 
 ## 📷 Screenshots
 
-![dashboard](https://github.com/user-attachments/assets/311079bb-fc54-439c-b3c4-3881760c3560)
-![keylog](https://github.com/user-attachments/assets/3e810ecf-735d-463b-9f47-fc735aea3abd)
+![Screenshot 2025-06-12 123326](https://github.com/user-attachments/assets/13e0c78d-37e2-4d01-a871-cc7a94a44fff)
+
+![Screenshot 2025-06-12 123242](https://github.com/user-attachments/assets/1341d973-baaf-46cf-8554-5c31fb43b10a)
 
 > Example of live keystroke monitoring via Flask web dashboard.
 
@@ -148,7 +149,7 @@ https://github.com/Tengen-12
 ## 👨‍🎓 Author
 
 **Aditya Barokar**  
-Cybersecurity Analyst | B.Tech Final Year  
+Cybersecurity Analyst 
 
 ---
 

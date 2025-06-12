@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keylogger Simulator Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    {% block extra_css %}
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .navbar-brand {
+            font-weight: bold;
+        }
+        .container {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #343a40;
+            margin-bottom: 20px;
+        }
+        .log-display {
+            background: #1e1e1e;
+            color: #00ff00;
+            font-family: 'Consolas', monospace;
+            border: 1px solid #333;
+            border-radius: 4px;
+            padding: 15px;
+            height: 400px;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .log-display::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .log-display::-webkit-scrollbar-track {
+            background: #2e2e2e;
+        }
+        
+        .log-display::-webkit-scrollbar-thumb {
+            background: #666;
+            border-radius: 4px;
+        }
+        
+        .log-stats {
+            background: #f8f9fa;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stats-item {
+            text-align: center;
+            padding: 10px;
+            border-right: 1px solid #dee2e6;
+        }
+        
+        .stats-item:last-child {
+            border-right: none;
+        }
+        
+        .stats-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #0d6efd;
+        }
+        
+        .btn-toolbar {
+            margin-top: 15px;
+        }
+        
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+    </style>
+    {% endblock %}
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Keylogger Simulator</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
+                <a class="nav-item nav-link" href="{{ url_for('disclaimer') }}">Disclaimer & GDPR</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-4">
+        {% block content %}
+        <div class="row mb-4">
+            <div class="col-12">
+                <h2 class="mb-4">Keystroke Log Dashboard</h2>
+                
+                <div class="log-stats row">
+                    <div class="col-md-3 stats-item">
+                        <div class="stats-value" id="total-keystrokes">0</div>
+                        <div>Total Keystrokes</div>
+                    </div>
+                    <div class="col-md-3 stats-item">
+                        <div class="stats-value" id="chars-per-min">0</div>
+                        <div>Chars/Minute</div>
+                    </div>
+                    <div class="col-md-3 stats-item">
+                        <div class="stats-value" id="special-chars">0</div>
+                        <div>Special Characters</div>
+                    </div>
+                    <div class="col-md-3 stats-item">
+                        <div class="stats-value" id="log-size">0 KB</div>
+                        <div>Log Size</div>
+                    </div>
+                </div>
+                
+                <div class="log-container position-relative">
+                    <pre id="log-display" class="log-display">{{ logs|safe }}</pre>
+                    <div class="loading-overlay" id="loading-overlay">
+                        <div class="spinner-border text-light" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="btn-toolbar justify-content-between">
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="refreshLogs()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+                                <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+                            </svg>
+                            Refresh
+                        </button>
+                        <button class="btn btn-success" id="autoRefreshBtn" onclick="toggleAutoRefresh()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445z"/>
+                            </svg>
+                            Start Auto-Refresh
+                        </button>
+                    </div>
+                    <button class="btn btn-danger" onclick="clearLogs()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                        </svg>
+                        Clear Logs
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+    </div>
+    <footer>
+        &copy; 2023 Keylogger Simulator. All rights reserved.
+    </footer>
+    {% block extra_js %}
+    <script>
+    let autoRefreshInterval = null;
+    let lastTimestamp = null;
+
+    function showLoading() {
+        document.getElementById('loading-overlay').style.display = 'flex';
+    }
+
+    function hideLoading() {
+        document.getElementById('loading-overlay').style.display = 'none';
+    }
+
+    function updateStats(logs) {
+        const lines = logs.split('\n');
+        const totalKeystrokes = lines.length - 1;
+        document.getElementById('total-keystrokes').textContent = totalKeystrokes;
+        
+        // Calculate chars per minute
+        const now = new Date();
+        const timestamps = lines
+            .map(line => line.match(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/))
+            .filter(match => match)
+            .map(match => new Date(match[0]));
+        
+        if (timestamps.length >= 2) {
+            const timeSpanMinutes = (timestamps[timestamps.length - 1] - timestamps[0]) / (1000 * 60);
+            const charsPerMin = Math.round(totalKeystrokes / timeSpanMinutes);
+            document.getElementById('chars-per-min').textContent = charsPerMin;
+        }
+        
+        // Count special characters
+        const specialChars = logs.match(/[^a-zA-Z0-9\s]/g)?.length || 0;
+        document.getElementById('special-chars').textContent = specialChars;
+        
+        // Calculate log size
+        const logSize = Math.round(logs.length / 1024);
+        document.getElementById('log-size').textContent = `${logSize} KB`;
+    }
+
+    function refreshLogs() {
+        showLoading();
+        fetch('/logs')
+            .then(response => response.json())
+            .then(data => {
+                const logDisplay = document.getElementById('log-display');
+                if (data.logs && data.logs.trim()) {
+                    logDisplay.innerHTML = data.logs.replace(/\n/g, '<br>');
+                    updateStats(data.logs);
+                    lastTimestamp = data.timestamp;
+                } else {
+                    logDisplay.innerHTML = "No logs available.";
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching logs:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Failed to fetch logs. Please try again.',
+                });
+            })
+            .finally(() => {
+                hideLoading();
+            });
+    }
+
+    function toggleAutoRefresh() {
+        const btn = document.getElementById('autoRefreshBtn');
+        if (autoRefreshInterval) {
+            clearInterval(autoRefreshInterval);
+            autoRefreshInterval = null;
+            btn.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play-circle" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445z"/>
+                </svg>
+                Start Auto-Refresh
+            `;
+        } else {
+            autoRefreshInterval = setInterval(refreshLogs, 5000);
+            btn.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pause-circle" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path d="M5 6.25a1.25 1.25 0 1 1 2.5 0v3.5a1.25 1.25 0 1 1-2.5 0v-3.5zm3.5 0a1.25 1.25 0 1 1 2.5 0v3.5a1.25 1.25 0 1 1-2.5 0v-3.5z"/>
+                </svg>
+                Stop Auto-Refresh
+            `;
+        }
+    }
+
+    function clearLogs() {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to recover the logs!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, clear it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                showLoading();
+                fetch('/clear-logs', {
+                    method: 'POST'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        refreshLogs();
+                        Swal.fire(
+                            'Cleared!',
+                            'The logs have been cleared.',
+                            'success'
+                        );
+                    } else {
+                        throw new Error('Failed to clear logs');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error clearing logs:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Failed to clear logs. Please try again.',
+                    });
+                })
+                .finally(() => {
+                    hideLoading();
+                });
+            }
+        });
+    }
+
+    // Initial load
+    refreshLogs();
+    </script>
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethical Use Disclaimer & GDPR Compliance</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .navbar-brand {
+            font-weight: bold;
+        }
+        .container {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #343a40;
+            margin-bottom: 20px;
+        }
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        .disclaimer-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .alert {
+            border-left: 4px solid #ffc107;
+        }
+        
+        .disclaimer-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .disclaimer-section h3 {
+            color: #0d6efd;
+            margin-bottom: 1rem;
+        }
+        
+        .checkbox-container {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Keylogger Simulator</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="{{ url_for('dashboard') }}">Dashboard</a>
+                <a class="nav-item nav-link" href="{{ url_for('disclaimer') }}">Disclaimer & GDPR</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-4">
+        <div class="disclaimer-container">
+            <h2 class="mb-4">Ethical Use Disclaimer & GDPR Compliance</h2>
+            
+            <div class="alert alert-warning" role="alert">
+                <h4 class="alert-heading">Important Notice</h4>
+                <p>This keylogger simulator is provided <strong>for educational purposes only</strong>. Unauthorized use of keylogging software is illegal and unethical.</p>
+            </div>
+            
+            <div class="disclaimer-section">
+                <h3>Ethical Use Guidelines</h3>
+                <ul>
+                    <li>This tool is intended solely for learning and research in cybersecurity</li>
+                    <li>Only use in controlled environments (e.g., isolated virtual machines, labs)</li>
+                    <li>All parties must provide explicit consent before use</li>
+                    <li>Do not use for malicious purposes or unauthorized surveillance</li>
+                </ul>
+            </div>
+            
+            <div class="disclaimer-section">
+                <h3>GDPR Compliance</h3>
+                <p>When using this tool, you must comply with:</p>
+                <ul>
+                    <li>General Data Protection Regulation (GDPR)</li>
+                    <li>Local data protection laws</li>
+                    <li>Privacy regulations</li>
+                </ul>
+                <p>Key Points:</p>
+                <ul>
+                    <li>Data is stored locally only - no network transmission</li>
+                    <li>Personal data requires explicit, informed consent</li>
+                    <li>Implement appropriate security measures</li>
+                    <li>Respect data subject rights</li>
+                </ul>
+            </div>
+            
+            <div class="disclaimer-section">
+                <h3>Legal Warning</h3>
+                <p>Failure to use this tool ethically and legally may result in:</p>
+                <ul>
+                    <li>Criminal prosecution</li>
+                    <li>Civil lawsuits</li>
+                    <li>GDPR fines (up to €20 million or 4% of annual revenue)</li>
+                    <li>Reputational damage</li>
+                </ul>
+            </div>
+            
+            <div class="checkbox-container">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="disclaimerCheckbox">
+                    <label class="form-check-label" for="disclaimerCheckbox">
+                        I understand and agree to use this tool ethically and in compliance with all applicable laws and regulations
+                    </label>
+                </div>
+                <button class="btn btn-primary mt-3" id="acceptButton" disabled>
+                    Accept & Continue
+                </button>
+            </div>
+        </div>
+    </div>
+    <footer>
+        &copy; 2023 Keylogger Simulator. All rights reserved.
+    </footer>
+    <script>
+    document.getElementById('disclaimerCheckbox').addEventListener('change', function() {
+        document.getElementById('acceptButton').disabled = !this.checked;
+    });
+
+    document.getElementById('acceptButton').addEventListener('click', function() {
+        fetch('/disclaimer', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                window.location.href = "{{ url_for('dashboard') }}";
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Failed to process your acknowledgment. Please try again.',
+            });
+        });
+    });
+    </script>
+</body>
+</html>
